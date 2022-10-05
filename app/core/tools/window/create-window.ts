@@ -17,6 +17,7 @@ export interface CreateWindowOptions {
   windowOptions?: BrowserWindowConstructorOptions
   /** 窗口启动参数 */
   createConfig?: CreateConfig
+  isInit?:boolean;
 }
 
 /** 已创建的窗口列表 */
@@ -59,6 +60,13 @@ export function createWindow(key: RouteName, options: CreateWindowOptions = {}):
       ...options.windowOptions, // 调用方法时传入的选项
     }
 
+    let splash: BrowserWindow | undefined;
+    if (options.isInit) {
+      splash = createSplashWindow();
+      splash.on('closed', () => (splash = undefined));
+      windowOptions.show = false;
+    }
+
     const createConfig: CreateConfig = {
       ...$tools.DEFAULT_CREATE_CONFIG,
       ...routeConfig.createConfig,
@@ -79,7 +87,9 @@ export function createWindow(key: RouteName, options: CreateWindowOptions = {}):
     }
 
     const win = new BrowserWindow(windowOptions)
-
+    if (!options.isInit) {
+      win.maximize();
+    }
     const url = getWindowUrl(key, options)
     windowList.set(key, win)
     win.loadURL(url)
@@ -100,6 +110,12 @@ export function createWindow(key: RouteName, options: CreateWindowOptions = {}):
     })
 
     win.webContents.on('did-finish-load', () => {
+      if (options.isInit) {
+        splash && !splash.isDestroyed() && splash.close();
+        win.maximize();
+        win.focus();
+        return resolve(win);
+      }
       if (createConfig.autoShow) {
         if (createConfig.delayToShow) {
           setTimeout(() => {
@@ -145,4 +161,18 @@ export function activeWindow(key: RouteName): BrowserWindow | false {
   } else {
     return false
   }
+}
+export function createSplashWindow(): BrowserWindow {
+  const splash = new BrowserWindow({
+    width: 500,
+    height: 280,
+    frame: false,
+    skipTaskbar: true,
+    resizable: false,
+    alwaysOnTop: true,
+    transparent: true,
+  });
+  const url = `file://${path.join(__dirname, '../../assets/splash.html')}`;
+  splash.loadURL(url);
+  return splash;
 }

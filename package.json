@@ -1,11 +1,16 @@
 {
-  "name": "electron-antd",
-  "appId": "org.electron.electron-antd",
+  "name": "electron-base",
+  "appId": "org.electron.electron-base",
   "version": "1.0.0",
   "buildVersion": "0001",
   "private": false,
   "main": "dist/main/main.js",
-  "author": "lanten",
+  "author": "chinhpro2k",
+  "homepage": "./",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chinhpro2k/electron-base"
+  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development BUILD_ENV=dev npm run ts:dev",
     "build:dev": "cross-env NODE_ENV=production BUILD_ENV=dev npm run ts:build",
@@ -13,7 +18,21 @@
     "ts:dev": "npm run ts:compile && node build/.out/tasks/dev-server.js",
     "ts:build": "npm run ts:compile && node build/.out/tasks/build.js",
     "ts:compile": "tsc --project build/build.tsconfig.json",
-    "lint": "eslint --ext .ts,.tsx src"
+    "lint": "eslint --ext .ts,.tsx src",
+    "build:publish": "set GH_TOKEN=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 && cross-env NODE_ENV=production BUILD_ENV=prod npm run ts:build always"
+  },
+  "build": {
+    "appId": "org.electron.electron-base",
+    "productName": "electron-base",
+    "directories": {
+      "output": "electron-build",
+      "buildResources": "build-assets"
+    },
+    "win": {
+      "publish": [
+        "github"
+      ]
+    }
   },
   "devDependencies": {
     "@electron/remote": "^2.0.1",
@@ -72,12 +91,24 @@
     "webpackbar": "^5.0.2"
   },
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lanten/electron-antd.git"
-  },
   "bugs": {
-    "url": "https://github.com/lanten/electron-antd/issues"
+    "url": "https://github.com/chinhpro2k/electron-base/issues"
   },
-  "homepage": "https://github.com/lanten/electron-antd#readme"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "electron-is-dev": "^2.0.0",
+    "electron-updater": "^5.2.1",
+    "react-scripts": "^5.0.1"
+  }
 }

@@ -27,14 +27,16 @@ const config: Configuration = {
   asar: false,
   directories: {
     buildResources: 'assets',
-    output: path.join(buildConfig.release, `${productName}-release-${version}.${buildVersion}`),
+    output: path.join(buildConfig.release, `${productName}-release`),
   },
   win: {
     icon: ICON_ICO,
     target: ['nsis', 'msi'],
+    publish:["github"]
   },
   mac: {
     icon: ICON_ICNS,
+    target: ['dmg'],
   },
   dmg: {
     icon: ICON_ICNS,

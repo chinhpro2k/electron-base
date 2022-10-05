@@ -39,70 +39,14 @@ export default class Demo extends React.Component<DemoProps, DemoState> {
     const { count: reduxCount, countAlias } = this.props
     return (
       <div className="layout-padding">
-        <Card title="Redux Test" className="mb-16">
-          <p>redux count : {reduxCount}</p>
-          <p>redux countAlias : {countAlias}</p>
+       chinh123
+        test
+        test
+        kakakaa
 
-          <div className="mt-16">
-            <Button
-              type="primary"
-              onClick={() => {
-                this.props.dispatch({ type: 'ACTION_ADD_COUNT', data: reduxCount + 1 })
-              }}
-            >
-              Add
-            </Button>
+        ffff
 
-            <Button
-              className="ml-16"
-              type="primary"
-              onClick={() => {
-                this.props.dispatch({ type: 'ACTION_ADD_COUNT', data: countAlias + 1 })
-              }}
-            >
-              Add (alias)
-            </Button>
-
-            <Button
-              className="ml-16"
-              type="primary"
-              loading={asyncDispatchLoading}
-              onClick={() => {
-                this.props.dispatch(this.asyncDispatch)
-              }}
-            >
-              Add (async)
-            </Button>
-          </div>
-
-          <p className="text-gray mt-16 mb-16">
-            Redux runs in the main process, which means it can be shared across all renderer processes.
-          </p>
-
-          <Button onClick={this.openNewWindow} loading={createWindowLoading}>
-            Open new window
-          </Button>
-        </Card>
-
-        <Card title="Request Test" className="mb-16">
-          <Spin spinning={loading}>
-            <div className="mb-16">
-              <Button type="primary" onClick={this.requestTest.bind(this)}>
-                Request
-              </Button>
-
-              <Button className="ml-16" type="primary" onClick={this.requestTestError.bind(this)}>
-                Request Error (notification)
-              </Button>
-
-              <Button className="ml-16" type="primary" onClick={this.requestTestErrorModal.bind(this)}>
-                Request Error (modal)
-              </Button>
-            </div>
-
-            <Input.TextArea value={JSON.stringify(resData)} autoSize />
-          </Spin>
-        </Card>
+        <p>This is version 1.0.3</p>
       </div>
     )
   }
